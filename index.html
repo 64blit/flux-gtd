@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flux GTD | Focus & Flow</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h1 class="logo">FLUX</h1>
+            <ul class="nav-links">
+                <li class="active" onclick="setView('inbox')">📥 Inbox <span id="count-inbox" class="badge">0</span>
+                </li>
+                <li onclick="setView('next')">🔥 Next Actions <span id="count-next" class="badge">0</span></li>
+                <li onclick="setView('waiting')">⏳ Waiting <span id="count-waiting" class="badge">0</span></li>
+                <li onclick="setView('done')">✅ Done</li>
+            </ul>
+
+            <div class="timer-section">
+                <h2>Focus Timer</h2>
+                <div id="timer-display">25:00</div>
+                <div class="timer-controls">
+                    <button onclick="startTimer(25)">Focus</button>
+                    <button onclick="startTimer(5)">Break</button>
+                    <button onclick="resetTimer()" class="secondary">Stop</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h2 id="view-title">Inbox</h2>
+                <p id="view-desc">Capture everything. Sort later.</p>
+            </header>
+
+            <!-- Quick Add -->
+            <div class="input-group">
+                <input type="text" id="task-input" placeholder="What's on your mind? (Press Enter)"
+                    onkeypress="handleInput(event)">
+                <button onclick="addTask()">Add Task</button>
+            </div>
+
+            <!-- Task List -->
+            <ul id="task-list" class="task-list">
+                <!-- Tasks go here -->
+            </ul>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
