@@ -20,28 +20,17 @@
     - **Prettier:** For consistent code formatting.
     - **ESLint:** For identifying and fixing code quality issues.
 
-## 3. Application Components
+## 3. Application Structure
 
-The application is divided into logical components, each managed within `script.js`.
+To maintain simplicity, all JavaScript code is contained within a single file, `script.js`. The code is organized into logical sections:
 
-- **State Management (`state.js`):**
-    - A single source of truth for application state, including tasks, current view, and timer status.
-    - Functions for initializing, saving, and loading state from `localStorage`.
-- **UI Rendering (`ui.js`):**
-    - Handles all DOM manipulation.
-    - `renderTasks()`: Renders the task list based on the current view.
-    - `updateCounts()`: Updates the task counts in the navigation sidebar.
-    - `updateTimerDisplay()`: Updates the Pomodoro timer display.
-- **Event Handling (`events.js`):**
-    - Contains all event listeners and handlers for user interactions.
-    - `handleTaskInput()`: Manages the "Enter" key press to add a new task.
-    - `handleNavClick()`: Switches between different views (Inbox, Next, etc.).
-- **Core Logic (`main.js`):**
-    - `addTask()`: Creates a new task object and adds it to the state.
-    - `moveTask()`: Changes the status of a task.
-    - `deleteTask()`: Removes a task from the state.
-    - `startTimer()`, `resetTimer()`: Controls the Pomodoro timer.
-    - `notify()`: Handles browser notifications.
+- **State Management:** A set of global variables (`tasks`, `currentView`, `timerInterval`) holds the application's state. All state is saved to and loaded from `localStorage`.
+- **Core Functions:**
+    - **Task Management:** Functions like `addTask()`, `moveTask()`, and `deleteTask()` handle CRUD operations.
+    - **View Management:** `setView()` controls which task list is displayed.
+    - **Timer:** `startTimer()` and `resetTimer()` manage the Pomodoro timer.
+- **Rendering:** Functions like `renderTasks()` and `updateCounts()` are responsible for all DOM manipulation, ensuring the UI always reflects the current state.
+- **Event Listeners:** A main `DOMContentLoaded` listener initializes the application and sets up event handlers like `handleInput()`.
 
 ## 4. Data Model
 
