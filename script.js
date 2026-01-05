@@ -1,6 +1,8 @@
 // State
 let tasks = JSON.parse(localStorage.getItem('flux_tasks')) || [];
+let projects = JSON.parse(localStorage.getItem('flux_projects')) || [ { id: 1, name: 'Personal' } ];
 let currentView = 'inbox';
+let selectedProject = null;
 let timerInterval;
 let timeLeft = 25 * 60;
 
@@ -9,15 +11,19 @@ document.addEventListener('DOMContentLoaded', () =>
 {
     checkPermissions();
     renderTasks();
+    renderProjects();
     updateCounts();
+    document.getElementById('add-project-btn').addEventListener('click', addProject);
 });
 
 // Navigation
 function setView(view)
 {
     currentView = view;
+    selectedProject = null;
     // Update Sidebar UI
     document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
+    document.querySelectorAll('#project-list li').forEach(li => li.classList.remove('active'));
     document.querySelector(`li[onclick="setView('${view}')"]`).classList.add('active');
 
     // Update Header
@@ -49,7 +55,8 @@ function addTask()
     const task = {
         id: Date.now(),
         text: text,
-        status: 'inbox', // inbox, next, waiting, done
+        status: selectedProject ? 'inbox' : currentView,
+        projectId: selectedProject,
         createdAt: new Date().toISOString()
     };
 
@@ -113,12 +120,25 @@ function saveTasks()
     localStorage.setItem('flux_tasks', JSON.stringify(tasks));
 }
 
+function saveProjects()
+{
+    localStorage.setItem('flux_projects', JSON.stringify(projects));
+}
+
 function renderTasks()
 {
     const list = document.getElementById('task-list');
     list.innerHTML = '';
 
-    const filtered = tasks.filter(t => t.status === currentView);
+    let filtered = [];
+    if (currentView === 'project')
+    {
+        filtered = tasks.filter(t => t.projectId === selectedProject);
+    } else
+    {
+        filtered = tasks.filter(t => t.status === currentView && !t.projectId);
+    }
+
 
     filtered.forEach(task =>
     {
@@ -142,7 +162,8 @@ function renderTasks()
 
     if (filtered.length === 0)
     {
-        list.innerHTML = `<li style="text-align:center; color: var(--text-muted); margin-top: 2rem;">No tasks in ${currentView}. time to relax? 🌴</li>`;
+        const viewName = selectedProject ? projects.find(p => p.id === selectedProject).name : currentView;
+        list.innerHTML = `<li style="text-align:center; color: var(--text-muted); margin-top: 2rem;">No tasks in ${viewName}. Time to relax? 🌴</li>`;
     }
 }
 
@@ -157,6 +178,58 @@ function updateCounts()
     document.getElementById('count-inbox').innerText = counts.inbox;
     document.getElementById('count-next').innerText = counts.next;
     document.getElementById('count-waiting').innerText = counts.waiting;
+}
+
+// Projects
+function addProject()
+{
+    const input = document.getElementById('project-input');
+    const name = input.value.trim();
+    if (!name) return;
+
+    const project = {
+        id: Date.now(),
+        name: name,
+    };
+
+    projects.push(project);
+    saveProjects();
+    renderProjects();
+    input.value = '';
+    selectProject(project.id);
+}
+
+function selectProject(id)
+{
+    selectedProject = id;
+    currentView = 'project';
+    // Update UI
+    document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
+    renderProjects();
+
+    // Update Header
+    const project = projects.find(p => p.id === id);
+    document.getElementById('view-title').innerText = project.name;
+    document.getElementById('view-desc').innerText = `Tasks in ${project.name}`;
+
+    renderTasks();
+}
+
+function renderProjects()
+{
+    const list = document.getElementById('project-list');
+    list.innerHTML = '';
+    projects.forEach(project =>
+    {
+        const li = document.createElement('li');
+        li.addEventListener('click', () => selectProject(project.id));
+        li.innerText = project.name;
+        if (selectedProject === project.id)
+        {
+            li.classList.add('active');
+        }
+        list.appendChild(li);
+    });
 }
 
 // Timer
