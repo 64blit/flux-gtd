@@ -365,3 +365,30 @@ body {
 .action-btn:hover {
     color: white;
 }
+
+/* Priority Styles */
+.priority-high {
+    border-left: 4px solid var(--accent-danger);
+}
+.priority-medium {
+    border-left: 4px solid var(--accent-primary);
+}
+.priority-low {
+    border-left: 4px solid var(--accent-success);
+}
+
+#priority-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 1rem;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#priority-select:focus {
+    border-color: var(--accent-primary);
+}

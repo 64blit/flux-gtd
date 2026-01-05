@@ -56,8 +56,12 @@
 
             <!-- Quick Add -->
             <div class="input-group">
-                <input type="text" id="task-input" placeholder="What's on your mind? (Press Enter)"
-                    onkeypress="handleInput(event)">
+                <input type="text" id="task-input" placeholder="What's on your mind? (Press Enter)" onkeypress="handleInput(event)">
+                <select id="priority-select">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
                 <button onclick="addTask()">Add Task</button>
             </div>
 

@@ -52,10 +52,13 @@ function addTask()
     const text = input.value.trim();
     if (!text) return;
 
+    const priority = document.getElementById('priority-select').value;
+
     const task = {
         id: Date.now(),
         text: text,
         status: selectedProject ? 'inbox' : currentView,
+        priority: priority,
         projectId: selectedProject,
         createdAt: new Date().toISOString()
     };
@@ -143,7 +146,7 @@ function renderTasks()
     filtered.forEach(task =>
     {
         const li = document.createElement('li');
-        li.className = `task-item ${task.status === 'done' ? 'done' : ''}`;
+        li.className = `task-item ${task.status === 'done' ? 'done' : ''} priority-${task.priority || 'medium'}`;
         li.innerHTML = `
             <div class="task-content">
                 <div class="checkbox" onclick="toggleDone(${task.id})">
