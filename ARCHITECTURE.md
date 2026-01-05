@@ -51,6 +51,12 @@ The application is divided into logical components, each managed within `script.
     - `setTheme()`: Applies the selected theme to the application.
     - `loadTheme()`: Loads the user's preferred theme from `localStorage`.
 
+### Project Management UI
+- **Project List:** A dedicated section in the navigation sidebar to display all user-created projects.
+- **"Add Project" Button:** A button that opens a modal or an inline form to create a new project.
+- **Project Context Menu:** A right-click or dropdown menu for each project, providing options to rename or delete it.
+- **Task-to-Project Assignment:** A dropdown menu in the task creation/editing form to assign a task to a project.
+
 ## 4. Data Model
 
 All data is stored in `localStorage` under two keys: `flux_tasks` and `flux_projects`.

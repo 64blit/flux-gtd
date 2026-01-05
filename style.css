@@ -282,3 +282,130 @@ body {
 .action-btn:hover {
     color: white;
 }
+
+/* Projects Section */
+.projects-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+}
+
+.projects-header h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.add-project-btn {
+    background: transparent;
+    border: 1px dashed var(--text-muted);
+    color: var(--text-muted);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 24px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.add-project-btn:hover {
+    background: var(--accent-primary);
+    color: var(--bg-dark);
+    border-style: solid;
+}
+
+.project-list {
+    list-style: none;
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 0.5rem; /* For scrollbar */
+}
+
+.project-list li {
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.project-list li:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.project-list li.active {
+    background: var(--accent-secondary);
+    color: var(--bg-dark);
+}
+
+/* Project Select Dropdown */
+.project-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 3rem;
+}
+
+.project-select:focus {
+    border-color: var(--accent-secondary);
+}
+
+/* Context Menu */
+.context-menu {
+    position: absolute;
+    background-color: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 0.5rem 0;
+    z-index: 1000;
+}
+
+.context-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.context-menu li {
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.context-menu li:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.context-menu li#delete-project {
+    color: var(--accent-danger);
+}

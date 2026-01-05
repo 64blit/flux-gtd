@@ -1,6 +1,9 @@
 // State
 let tasks = JSON.parse(localStorage.getItem('flux_tasks')) || [];
+let projects = JSON.parse(localStorage.getItem('flux_projects')) || [];
 let currentView = 'inbox';
+let currentProject = null;
+let contextMenuTarget = null;
 let timerInterval;
 let timeLeft = 25 * 60;
 
@@ -9,29 +12,56 @@ document.addEventListener('DOMContentLoaded', () =>
 {
     checkPermissions();
     renderTasks();
+    renderProjects();
     updateCounts();
+    document.getElementById('add-project-btn').addEventListener('click', addProject);
+
+    // Context Menu Listeners
+    document.getElementById('rename-project').addEventListener('click', () =>
+    {
+        if (contextMenuTarget) renameProject(contextMenuTarget);
+        hideContextMenu();
+    });
+    document.getElementById('delete-project').addEventListener('click', () =>
+    {
+        if (contextMenuTarget) deleteProject(contextMenuTarget);
+        hideContextMenu();
+    });
+    window.addEventListener('click', hideContextMenu);
 });
 
 // Navigation
-function setView(view)
+function setView(view, projectId = null)
 {
     currentView = view;
+    currentProject = projectId;
     // Update Sidebar UI
-    document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
-    document.querySelector(`li[onclick="setView('${view}')"]`).classList.add('active');
+    document.querySelectorAll('.nav-links li, .project-list li').forEach(li => li.classList.remove('active'));
+    if (view === 'project')
+    {
+        const projectLi = document.querySelector(`li[data-project-id='${projectId}']`);
+        if (projectLi) projectLi.classList.add('active');
+    } else
+    {
+        const viewLi = document.querySelector(`li[onclick="setView('${view}')"]`);
+        if (viewLi) viewLi.classList.add('active');
+    }
+
 
     // Update Header
     const titles = {
         'inbox': 'Inbox',
         'next': 'Next Actions',
         'waiting': 'Waiting For',
-        'done': 'Completed'
+        'done': 'Completed',
+        'project': projects.find(p => p.id === projectId)?.name || 'Project'
     };
     const descs = {
         'inbox': 'Capture everything. Sort later.',
         'next': 'What needs to be done now?',
         'waiting': 'Delegated or blocked tasks.',
-        'done': 'History of your productivity.'
+        'done': 'History of your productivity.',
+        'project': `Tasks for this project.`
     };
     document.getElementById('view-title').innerText = titles[ view ];
     document.getElementById('view-desc').innerText = descs[ view ];
@@ -43,6 +73,7 @@ function setView(view)
 function addTask()
 {
     const input = document.getElementById('task-input');
+    const projectSelect = document.getElementById('project-select');
     const text = input.value.trim();
     if (!text) return;
 
@@ -50,6 +81,7 @@ function addTask()
         id: Date.now(),
         text: text,
         status: 'inbox', // inbox, next, waiting, done
+        projectId: projectSelect.value ? parseInt(projectSelect.value) : null,
         createdAt: new Date().toISOString()
     };
 
@@ -118,7 +150,15 @@ function renderTasks()
     const list = document.getElementById('task-list');
     list.innerHTML = '';
 
-    const filtered = tasks.filter(t => t.status === currentView);
+    let filtered = tasks;
+
+    if (currentView === 'project')
+    {
+        filtered = tasks.filter(t => t.projectId === currentProject);
+    } else
+    {
+        filtered = tasks.filter(t => t.status === currentView);
+    }
 
     filtered.forEach(task =>
     {
@@ -157,6 +197,102 @@ function updateCounts()
     document.getElementById('count-inbox').innerText = counts.inbox;
     document.getElementById('count-next').innerText = counts.next;
     document.getElementById('count-waiting').innerText = counts.waiting;
+}
+
+// Context Menu
+function showContextMenu(x, y, projectId)
+{
+    const menu = document.getElementById('context-menu');
+    menu.style.display = 'block';
+    menu.style.left = `${x}px`;
+    menu.style.top = `${y}px`;
+    contextMenuTarget = projectId;
+}
+
+function hideContextMenu()
+{
+    document.getElementById('context-menu').style.display = 'none';
+    contextMenuTarget = null;
+}
+
+// Projects
+function addProject()
+{
+    const name = prompt("Enter project name:");
+    if (!name) return;
+
+    const project = {
+        id: Date.now(),
+        name: name,
+        createdAt: new Date().toISOString()
+    };
+    projects.push(project);
+    saveProjects();
+    renderProjects();
+}
+
+function renameProject(id)
+{
+    const project = projects.find(p => p.id === id);
+    if (!project) return;
+    const newName = prompt("Enter new project name:", project.name);
+    if (newName)
+    {
+        project.name = newName;
+        saveProjects();
+        renderProjects();
+        if (currentProject === id)
+        {
+            setView('project', id);
+        }
+    }
+}
+
+function deleteProject(id)
+{
+    if (!confirm("Are you sure? This will also delete all tasks in this project.")) return;
+    projects = projects.filter(p => p.id !== id);
+    tasks = tasks.filter(t => t.projectId !== id);
+    saveProjects();
+    saveTasks();
+    renderProjects();
+    if (currentProject === id)
+    {
+        setView('inbox');
+    }
+}
+
+function saveProjects()
+{
+    localStorage.setItem('flux_projects', JSON.stringify(projects));
+}
+
+function renderProjects()
+{
+    const list = document.getElementById('project-list');
+    const select = document.getElementById('project-select');
+    list.innerHTML = '';
+    select.innerHTML = '<option value="">No Project</option>';
+
+    projects.forEach(p =>
+    {
+        const li = document.createElement('li');
+        li.dataset.projectId = p.id;
+        li.innerText = p.name;
+        li.onclick = () => setView('project', p.id);
+        li.oncontextmenu = (e) =>
+        {
+            e.preventDefault();
+            e.stopPropagation(); // Prevent window click listener from hiding immediately
+            showContextMenu(e.pageX, e.pageY, p.id);
+        };
+        list.appendChild(li);
+
+        const option = document.createElement('option');
+        option.value = p.id;
+        option.innerText = p.name;
+        select.appendChild(option);
+    });
 }
 
 // Timer
