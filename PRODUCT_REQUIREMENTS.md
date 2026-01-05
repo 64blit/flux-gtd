@@ -22,20 +22,53 @@
     - As a user, I want to move a task to "Waiting" if I'm blocked or have delegated it.
     - As a user, I want to view all my completed tasks in a "Done" list for a sense of accomplishment.
 
-### 2.3. Pomodoro Timer
+### 2.3. Projects
+- **Description:** Users can group tasks into projects.
+- **User Stories:**
+    - As a user, I want to create a new project to organize my tasks.
+    - As a user, I want to assign a task to a project.
+    - As a user, I want to view all tasks in a project.
+    - As a user, I want to rename or delete a project.
+
+### 2.4. Task Priorities
+- **Description:** Users can assign a priority level to each task.
+- **User Stories:**
+    - As a user, I want to set a priority for a task (low, medium, high) to indicate its importance.
+    - As a user, I want to see a visual indicator of a task's priority.
+
+### 2.5. Due Dates
+- **Description:** Users can add a due date to a task.
+- **User Stories:**
+    - As a user, I want to assign a due date to a task to keep track of deadlines.
+    - As a user, I want to be notified when a task is approaching its due date.
+
+### 2.6. Subtasks
+- **Description:** Users can break down a task into smaller, more manageable subtasks.
+- **User Stories:**
+    - As a user, I want to add subtasks to a task to break it down into smaller steps.
+    - As a user, I want to mark a subtask as complete.
+    - As a user, I want to see the progress of a task based on its completed subtasks.
+
+### 2.7. Search & Filtering
+- **Description:** Users can search for tasks and filter them by various criteria.
+- **User Stories:**
+    - As a user, I want to search for a task by its title.
+    - As a user, I want to filter tasks by their status, priority, or due date.
+
+### 2.8. Pomodoro Timer
 - **Description:** A built-in timer to help users focus on a single task for a set period.
 - **User Stories:**
     - As a user, I want to start a 25-minute "focus" timer to work on a task without interruption.
     - As a user, I want to start a 5-minute "break" timer to rest between focus sessions.
     - As a user, I want to be able to stop or reset the timer at any time.
 
-### 2.4. Browser Notifications
-- **Description:** The application will use browser notifications to alert the user when a timer session is complete.
+### 2.9. Browser Notifications
+- **Description:** The application will use browser notifications to alert the user when a timer session is complete or a task is due.
 - **User Stories:**
     - As a user, I want to receive a notification when my Pomodoro timer finishes so I know when to take a break.
     - As a user, I want to be asked for permission to send notifications when I first use the app.
 
-### 2.5. Data Persistence
+### 2.10. Data Persistence
 - **Description:** All tasks are saved in the browser's `localStorage`.
 - **User Stories:**
     - As a user, I want my tasks to be saved automatically so I don't lose my work if I close the browser.
@@ -47,6 +80,8 @@
 - **Layout:** A two-column layout with navigation on the left and the main content on the right.
 - **Interactivity:** Smooth animations and transitions to provide a responsive and engaging user experience.
 - **Accessibility:** Adherence to WCAG 2.1 guidelines to ensure the application is usable for people with disabilities. This includes proper color contrast, keyboard navigation, and screen reader support.
+- **Theming:**
+    - As a user, I want to be able to switch between a light and dark theme to suit my preferences.
 
 ## 4. Non-Functional Requirements
 

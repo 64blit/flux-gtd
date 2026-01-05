@@ -1,76 +1,64 @@
 [
   {
-    "title": "Implement Core Task Management (CRUD)",
-    "description": "Implement the basic CRUD (Create, Read, Update, Delete) functionality for tasks. This includes adding new tasks, editing existing tasks, and deleting them. Tasks should be persisted to localStorage.",
-    "branch_name": "feature/core-task-management",
+    "title": "Implement Projects Feature",
+    "description": "Develop the ability to group tasks into projects. This includes creating, renaming, and deleting projects, as well as assigning tasks to a project.",
+    "branch_name": "feature/projects",
     "acceptance_criteria": [
-      "User can add a new task to the 'Inbox'.",
-      "User can edit the text of an existing task.",
-      "User can delete a task.",
-      "Tasks are saved to localStorage and persist between sessions."
+      "Users can create a new project.",
+      "Users can rename an existing project.",
+      "Users can delete a project.",
+      "Users can assign a task to a project.",
+      "Users can view all tasks within a specific project."
     ]
   },
   {
-    "title": "Develop GTD Task Organization",
-    "description": "Implement the GTD workflow, allowing users to move tasks between 'Inbox', 'Next Actions', and 'Waiting' lists. Completed tasks should be moved to the 'Done' list.",
-    "branch_name": "feature/gtd-organization",
+    "title": "Implement Task Priorities",
+    "description": "Add a priority level to each task (e.g., low, medium, high). This will help users identify which tasks are most important.",
+    "branch_name": "feature/task-priorities",
     "acceptance_criteria": [
-      "User can move a task from 'Inbox' to 'Next Actions'.",
-      "User can move a task to 'Waiting'.",
-      "Marking a task as complete moves it to the 'Done' list.",
-      "The UI correctly displays tasks based on the selected view."
+      "Users can set a priority for a task.",
+      "The task's priority is visually indicated in the UI.",
+      "Users can change the priority of a task."
     ]
   },
   {
-    "title": "Integrate Pomodoro Timer",
-    "description": "Add a Pomodoro timer to the application. The timer should have 'Focus' (25 min) and 'Break' (5 min) modes, and should be displayed prominently in the UI.",
-    "branch_name": "feature/pomodoro-timer",
+    "title": "Implement Due Dates",
+    "description": "Allow users to add a due date to each task. This will help users keep track of deadlines and manage their time more effectively.",
+    "branch_name": "feature/due-dates",
     "acceptance_criteria": [
-      "User can start a 25-minute focus timer.",
-      "User can start a 5-minute break timer.",
-      "The timer display updates every second.",
-      "The timer can be stopped and reset."
+      "Users can assign a due date to a task.",
+      "The due date is displayed in the task details.",
+      "The application sends a notification when a task is approaching its due date."
     ]
   },
   {
-    "title": "Implement Browser Notifications",
-    "description": "Integrate browser notifications to alert the user when a Pomodoro session is complete. The application should request notification permission on startup.",
-    "branch_name": "feature/browser-notifications",
+    "title": "Implement Subtasks",
+    "description": "Enable users to break down a task into smaller, more manageable subtasks. This will help users track the progress of a task and stay organized.",
+    "branch_name": "feature/subtasks",
     "acceptance_criteria": [
-      "The app requests permission for notifications on first load.",
-      "A notification is sent when the Pomodoro timer finishes.",
-      "The notification includes a clear message and a sound alert."
+      "Users can add subtasks to a task.",
+      "Users can mark a subtask as complete.",
+      "The progress of a task is visually represented based on its completed subtasks."
     ]
   },
   {
-    "title": "Refine UI/UX and Accessibility",
-    "description": "Improve the overall user interface and experience. This includes adding smooth animations, ensuring a responsive layout, and implementing accessibility features like keyboard navigation and screen reader support.",
-    "branch_name": "feature/ui-ux-refinements",
+    "title": "Implement Search & Filtering",
+    "description": "Add a search bar and filtering options to help users find specific tasks. Users should be able to filter tasks by status, priority, or due date.",
+    "branch_name": "feature/search-filtering",
     "acceptance_criteria": [
-      "The application is fully responsive and usable on different screen sizes.",
-      "All interactive elements are accessible via keyboard.",
-      "The application is tested with a screen reader to ensure proper ARIA roles and labels.",
-      "UI animations are smooth and do not hinder usability."
+      "Users can search for a task by its title.",
+      "Users can filter tasks by their status.",
+      "Users can filter tasks by their priority.",
+      "Users can filter tasks by their due date."
     ]
   },
   {
-    "title": "Write Unit and Integration Tests",
-    "description": "Write comprehensive unit and integration tests for the application's core logic using Jest. This includes testing task management functions, state manipulation, and timer controls.",
-    "branch_name": "test/unit-integration-tests",
+    "title": "Implement Theming",
+    "description": "Allow users to switch between a light and dark theme. This will improve the user experience and reduce eye strain.",
+    "branch_name": "feature/theming",
     "acceptance_criteria": [
-      "Unit tests cover all major functions in the codebase.",
-      "Test coverage meets a predefined threshold (e.g., 80%).",
-      "All tests pass successfully."
-    ]
-  },
-  {
-    "title": "Create End-to-End Tests",
-    "description": "Create end-to-end tests using Playwright to simulate user workflows. This will involve testing the entire application flow, from adding a task to completing it.",
-    "branch_name": "test/e2e-tests",
-    "acceptance_criteria": [
-      "E2E tests cover the main user scenarios (e.g., adding and completing a task).",
-      "Tests are run in a headless browser and pass consistently.",
-      "Screenshots or videos are generated for failed test runs to aid in debugging."
+      "Users can switch between a light and dark theme.",
+      "The selected theme is saved in `localStorage` and applied on subsequent visits."
     ]
   }
 ]
