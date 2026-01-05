@@ -26,6 +26,17 @@
                 <li onclick="setView('done')">✅ Done</li>
             </ul>
 
+            <!-- Projects Section -->
+            <div class="projects-section">
+                <div class="projects-header">
+                    <h2>Projects</h2>
+                    <button id="add-project-btn" class="add-project-btn">+</button>
+                </div>
+                <ul id="project-list" class="project-list">
+                    <!-- Projects will be dynamically inserted here -->
+                </ul>
+            </div>
+
             <div class="timer-section">
                 <h2>Focus Timer</h2>
                 <div id="timer-display">25:00</div>
@@ -48,6 +59,10 @@
             <div class="input-group">
                 <input type="text" id="task-input" placeholder="What's on your mind? (Press Enter)"
                     onkeypress="handleInput(event)">
+                <select id="project-select" class="project-select">
+                    <option value="">No Project</option>
+                    <!-- Project options will be dynamically inserted here -->
+                </select>
                 <button onclick="addTask()">Add Task</button>
             </div>
 
@@ -59,6 +74,14 @@
     </div>
 
     <script src="script.js"></script>
+
+    <!-- Context Menu -->
+    <div id="context-menu" class="context-menu" style="display: none;">
+        <ul>
+            <li id="rename-project">Rename</li>
+            <li id="delete-project">Delete</li>
+        </ul>
+    </div>
 </body>
 
 </html>

@@ -25,10 +25,11 @@
 ### 2.3. Projects
 - **Description:** Users can group tasks into projects.
 - **User Stories:**
-    - As a user, I want to create a new project to organize my tasks.
-    - As a user, I want to assign a task to a project.
-    - As a user, I want to view all tasks in a project.
-    - As a user, I want to rename or delete a project.
+    - As a user, I want to see a list of all my projects in the sidebar to easily switch between them.
+    - As a user, I want to click an "Add Project" button to create a new project.
+    - As a user, I want to assign a task to a project using a dropdown menu when I create or edit a task.
+    - As a user, I want to right-click on a project to open a menu with options to rename or delete it.
+    - As a user, when I delete a project, I want to be asked to confirm this action to prevent accidental data loss.
 
 ### 2.4. Task Priorities
 - **Description:** Users can assign a priority level to each task.
