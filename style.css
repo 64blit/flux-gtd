@@ -48,6 +48,8 @@ body {
     display: flex;
     flex-direction: column;
     border-right: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    z-index: 1;
 }
 
 .logo {
@@ -95,6 +97,87 @@ body {
 .nav-links li.active .badge {
     background: rgba(0, 0, 0, 0.2);
     color: white;
+}
+
+/* Projects Section */
+.projects-section {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.projects-section h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+}
+
+#project-list {
+    list-style: none;
+    margin-bottom: 1rem;
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 0 1rem;
+}
+
+#project-list li {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+#project-list li:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#project-list li.active {
+    background: var(--accent-secondary);
+    color: var(--bg-dark);
+}
+
+.project-input-group {
+    display: flex;
+    padding: 0 1rem;
+    gap: 0.5rem;
+}
+
+#project-input {
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid transparent;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#project-input:focus {
+    border-color: var(--accent-secondary);
+}
+
+#add-project-btn {
+    background: var(--accent-secondary);
+    color: var(--bg-dark);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    cursor: pointer;
+    line-height: 1;
+    flex-shrink: 0;
 }
 
 /* Timer Section */
