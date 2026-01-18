@@ -43,6 +43,7 @@
 - **User Stories:**
     - As a user, I want to assign a due date to a task to keep track of deadlines.
     - As a user, I want to be notified when a task is approaching its due date.
+    - As a user, I want to see a visual indication (e.g., red text) for tasks that are overdue.
 
 ### 2.6. Subtasks
 - **Description:** Users can break down a task into smaller, more manageable subtasks.

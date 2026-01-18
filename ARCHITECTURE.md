@@ -13,6 +13,7 @@
     - **HTML5:** For semantic structure.
     - **CSS3:** For styling, using custom properties (variables) for theming.
     - **JavaScript (ES6+):** For all application logic.
+    - **Date Handling:** Native `Date` object and HTML5 `<input type="date">` for all date-related functionality (no external libraries).
 - **Testing:**
     - **Jest:** For unit and integration testing of individual functions and components.
     - **Playwright:** For end-to-end testing to simulate user interactions and verify application flow.
@@ -50,6 +51,7 @@ The application is divided into logical components, each managed within `script.
     - `deleteTask()`: Removes a task from the state.
     - `startTimer()`, `resetTimer()`: Controls the Pomodoro timer.
     - `notify()`: Handles browser notifications.
+    - `checkDueDates()`: Checks for tasks that are due and triggers notifications or visual updates.
 - **Theming (`theme.js`):**
     - Manages the application's theme, including switching between light and dark modes.
     - `setTheme()`: Applies the selected theme to the application.
