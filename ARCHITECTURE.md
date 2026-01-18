@@ -46,6 +46,7 @@ The application is divided into logical components, each managed within `script.
     - `renameProject()`: Updates the name of an existing project.
     - `deleteProject()`: Removes a project and handles its tasks (e.g., delete or move to inbox).
     - `moveTask()`: Changes the status of a task.
+    - `changePriority()`: Updates the priority of an existing task.
     - `deleteTask()`: Removes a task from the state.
     - `startTimer()`, `resetTimer()`: Controls the Pomodoro timer.
     - `notify()`: Handles browser notifications.

@@ -36,6 +36,7 @@
 - **User Stories:**
     - As a user, I want to set a priority for a task (low, medium, high) to indicate its importance.
     - As a user, I want to see a visual indicator of a task's priority.
+    - As a user, I want to change the priority of an existing task to reflect changes in its importance.
 
 ### 2.5. Due Dates
 - **Description:** Users can add a due date to a task.
