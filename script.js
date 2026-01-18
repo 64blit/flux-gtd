@@ -60,6 +60,7 @@ function addTask()
         status: selectedProject ? 'inbox' : currentView,
         priority: priority,
         projectId: selectedProject,
+        subtasks: [],
         createdAt: new Date().toISOString()
     };
 
@@ -118,6 +119,49 @@ function toggleDone(id)
     }
 }
 
+function addSubtask(taskId, text)
+{
+    const task = tasks.find(t => t.id === taskId);
+    if (task && text.trim())
+    {
+        if (!task.subtasks) task.subtasks = [];
+        task.subtasks.push({
+            id: Date.now(),
+            text: text.trim(),
+            done: false
+        });
+        saveTasks();
+        renderTasks();
+    }
+}
+
+function toggleSubtask(taskId, subtaskId)
+{
+    const task = tasks.find(t => t.id === taskId);
+    if (task)
+    {
+        if (!task.subtasks) return;
+        const subtask = task.subtasks.find(st => st.id === subtaskId);
+        if (subtask)
+        {
+            subtask.done = !subtask.done;
+            saveTasks();
+            renderTasks();
+        }
+    }
+}
+
+function deleteSubtask(taskId, subtaskId)
+{
+    const task = tasks.find(t => t.id === taskId);
+    if (task && task.subtasks)
+    {
+        task.subtasks = task.subtasks.filter(st => st.id !== subtaskId);
+        saveTasks();
+        renderTasks();
+    }
+}
+
 function saveTasks()
 {
     localStorage.setItem('flux_tasks', JSON.stringify(tasks));
@@ -147,12 +191,31 @@ function renderTasks()
     {
         const li = document.createElement('li');
         li.className = `task-item ${task.status === 'done' ? 'done' : ''} priority-${task.priority || 'medium'}`;
-        li.innerHTML = `
-            <div class="task-content">
-                <div class="checkbox" onclick="toggleDone(${task.id})">
-                    ${task.status === 'done' ? '✓' : ''}
+
+        const subtasksHtml = (task.subtasks || []).map(st => `
+            <li class="subtask-item ${st.done ? 'done' : ''}">
+                <div class="checkbox small" onclick="toggleSubtask(${task.id}, ${st.id})">
+                    ${st.done ? '✓' : ''}
                 </div>
-                <span>${task.text}</span>
+                <span class="subtask-text">${st.text}</span>
+                <button class="action-btn small-btn" onclick="deleteSubtask(${task.id}, ${st.id})">×</button>
+            </li>
+        `).join('');
+
+        li.innerHTML = `
+            <div class="task-content-group">
+                <div class="task-header">
+                    <div class="checkbox" onclick="toggleDone(${task.id})">
+                        ${task.status === 'done' ? '✓' : ''}
+                    </div>
+                    <span>${task.text}</span>
+                </div>
+
+                ${subtasksHtml ? `<ul class="subtask-list">${subtasksHtml}</ul>` : ''}
+
+                <div class="add-subtask-wrapper">
+                    <input type="text" class="subtask-input" placeholder="+ Subtask" onkeydown="if(event.key === 'Enter'){ addSubtask(${task.id}, this.value); }">
+                </div>
             </div>
             <div class="actions">
                 ${currentView !== 'next' && currentView !== 'done' ? '<button class="action-btn" title="Move to Next" onclick="moveTask(' + task.id + ', \'next\')">🔥</button>' : ''}
