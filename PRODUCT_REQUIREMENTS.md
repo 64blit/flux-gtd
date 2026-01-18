@@ -28,7 +28,8 @@
     - As a user, I want to create a new project to organize my tasks.
     - As a user, I want to assign a task to a project.
     - As a user, I want to view all tasks in a project.
-    - As a user, I want to rename or delete a project.
+    - As a user, I want to rename a project to better reflect its content.
+    - As a user, I want to delete a project to remove it from my list.
 
 ### 2.4. Task Priorities
 - **Description:** Users can assign a priority level to each task.

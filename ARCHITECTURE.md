@@ -38,10 +38,13 @@ The application is divided into logical components, each managed within `script.
     - `handleTaskInput()`: Manages the "Enter" key press to add a new task.
     - `handleNavClick()`: Switches between different views (Inbox, Next, etc.).
     - `handleProjectClick()`: Filters tasks by the selected project.
+    - `handleProjectAction()`: Manages rename/delete actions for projects.
     - `handleSearchInput()`: Filters tasks based on user input.
 - **Core Logic (`main.js`):**
     - `addTask()`: Creates a new task object and adds it to the state.
     - `addProject()`: Creates a new project and adds it to the state.
+    - `renameProject()`: Updates the name of an existing project.
+    - `deleteProject()`: Removes a project and handles its tasks (e.g., delete or move to inbox).
     - `moveTask()`: Changes the status of a task.
     - `deleteTask()`: Removes a task from the state.
     - `startTimer()`, `resetTimer()`: Controls the Pomodoro timer.
