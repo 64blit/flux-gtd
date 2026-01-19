@@ -26,7 +26,7 @@
 The application is divided into logical components, each managed within `script.js`.
 
 - **State Management (`state.js`):**
-    - A single source of truth for application state, including tasks, projects, and user settings.
+    - A single source of truth for application state, including tasks, projects, user settings, and temporary UI state (like `searchQuery` and `filterPriority`).
     - Functions for initializing, saving, and loading state from `localStorage`.
 - **UI Rendering (`ui.js`):**
     - Handles all DOM manipulation.
@@ -40,7 +40,8 @@ The application is divided into logical components, each managed within `script.
     - `handleNavClick()`: Switches between different views (Inbox, Next, etc.).
     - `handleProjectClick()`: Filters tasks by the selected project.
     - `handleProjectAction()`: Manages rename/delete actions for projects.
-    - `handleSearchInput()`: Filters tasks based on user input.
+    - `handleSearchInput()`: Updates `searchQuery` state and triggers re-render.
+    - `handleFilterChange()`: Updates `filterPriority` state and triggers re-render.
 - **Core Logic (`main.js`):**
     - `addTask()`: Creates a new task object and adds it to the state.
     - `addProject()`: Creates a new project and adds it to the state.

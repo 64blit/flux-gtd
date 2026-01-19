@@ -53,10 +53,12 @@
     - As a user, I want to see the progress of a task based on its completed subtasks.
 
 ### 2.7. Search & Filtering
-- **Description:** Users can search for tasks and filter them by various criteria.
+- **Description:** Users can search for tasks and filter them by various criteria to quickly find what they need.
 - **User Stories:**
-    - As a user, I want to search for a task by its title.
-    - As a user, I want to filter tasks by their status, priority, or due date.
+    - As a user, I want to type keywords into a search bar to instantly filter the visible task list by title.
+    - As a user, I want to filter tasks by priority (Low, Medium, High) using a dropdown menu.
+    - As a user, I want to clear my search and filters easily to see all tasks again.
+    - As a user, I want the search and filter controls to be always accessible in the main content header.
 
 ### 2.8. Pomodoro Timer
 - **Description:** A built-in timer to help users focus on a single task for a set period.
