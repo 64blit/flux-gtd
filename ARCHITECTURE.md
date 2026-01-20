@@ -1,78 +1,118 @@
-# Flux GTD Architecture
+# Flux GTD: System Architecture
 
-## 1. Introduction
+## 1. Core Philosophy & Constraints
 
-This document outlines the software architecture for Flux, a Getting Things Done (GTD) application specifically designed for individuals with ADHD. The architecture prioritizes simplicity, performance, and ease of use, aiming to provide a focused and uncluttered user experience.
+- **Focus:** ADHD-friendly, minimalist, and distraction-free.
+- **Platform:** Client-side only single-page application (SPA).
+- **Persistence:** All data is stored in the browser's `localStorage`. No backend or database is required.
+- **Simplicity:** Built with vanilla HTML, CSS, and modern JavaScript (ES6+). No frameworks are to be used to keep the codebase lightweight and maintainable.
 
-## 2. Tech Stack
+## 2. Technology Stack
 
-The application will be a client-side single-page application (SPA) with no backend, leveraging browser `localStorage` for all data persistence. This approach ensures simplicity, offline capability, and zero server-side costs.
+- **Frontend:**
+    - **HTML5:** For semantic structure.
+    - **CSS3:** For styling, using custom properties (variables) for theming.
+    - **JavaScript (ES6+):** For all application logic.
+    - **Date Handling:** Native `Date` object and HTML5 `<input type="date">` for all date-related functionality (no external libraries).
+- **Testing:**
+    - **Jest:** For unit and integration testing of individual functions and components.
+    - **Playwright:** For end-to-end testing to simulate user interactions and verify application flow.
+- **Tooling:**
+    - **Prettier:** For consistent code formatting.
+    - **ESLint:** For identifying and fixing code quality issues.
 
--   **Frontend**: HTML5, CSS3, Vanilla JavaScript (ES6+)
--   **State Management**: Local state management within `script.js`.
--   **Data Persistence**: Browser `localStorage` API.
--   **Testing**:
-    -   **Unit Testing**: Jest
-    -   **End-to-End (E2E) Testing**: Playwright
--   **Linting/Formatting**: Prettier / ESLint (to be configured)
--   **Build/Dev Tools**: None required for this simple setup. We will serve files directly.
+## 3. Application Structure
 
-## 3. File Structure
+To maintain simplicity, all JavaScript code is contained within a single file, `script.js`. The code is organized into logical sections:
 
-The project will follow a simple, flat structure for now. As complexity grows, we can introduce component-based directories.
+- **State Management (`state.js`):**
+    - A single source of truth for application state, including tasks, projects, user settings, and temporary UI state (like `searchQuery` and `filterPriority`).
+    - Functions for initializing, saving, and loading state from `localStorage`.
+- **UI Rendering (`ui.js`):**
+    - Handles all DOM manipulation.
+    - `renderTasks()`: Renders the task list based on the current view, filters, and search queries. Supports rendering nested subtasks.
+    - `renderProjects()`: Renders the list of projects in the navigation.
+    - `updateCounts()`: Updates the task counts in the navigation sidebar.
+    - `updateTimerDisplay()`: Updates the Pomodoro timer display.
+- **Event Handling (`events.js`):**
+    - Contains all event listeners and handlers for user interactions.
+    - `handleTaskInput()`: Manages the "Enter" key press to add a new task.
+    - `handleNavClick()`: Switches between different views (Inbox, Next, etc.).
+    - `handleProjectClick()`: Filters tasks by the selected project.
+    - `handleProjectAction()`: Manages rename/delete actions for projects.
+    - `handleSearchInput()`: Updates `searchQuery` state and triggers re-render.
+    - `handleFilterChange()`: Updates `filterPriority` state and triggers re-render.
+- **Core Logic (`main.js`):**
+    - `addTask()`: Creates a new task object and adds it to the state.
+    - `addProject()`: Creates a new project and adds it to the state.
+    - `renameProject()`: Updates the name of an existing project.
+    - `deleteProject()`: Removes a project and handles its tasks (e.g., delete or move to inbox).
+    - `moveTask()`: Changes the status of a task.
+    - `changePriority()`: Updates the priority of an existing task.
+    - `addSubtask()`: Adds a new subtask to a specific task.
+    - `toggleSubtask()`: Toggles the completion status of a subtask.
+    - `deleteSubtask()`: Removes a subtask from a task.
+    - `deleteTask()`: Removes a task from the state.
+    - `startTimer()`, `resetTimer()`: Controls the Pomodoro timer.
+    - `notify()`: Handles browser notifications.
+    - `checkDueDates()`: Checks for tasks that are due and triggers notifications or visual updates.
+- **Theming (`theme.js`):**
+    - Manages the application's theme, including switching between light and dark modes.
+    - `setTheme()`: Applies the selected theme to the application.
+    - `loadTheme()`: Loads the user's preferred theme from `localStorage`.
 
-```
-/
-|-- index.html              # Main application HTML
-|-- style.css               # All application styles
-|-- script.js               # Core application logic
-|-- ARCHITECTURE.md         # This document
-|-- PRODUCT_REQUIREMENTS.md # Product requirements
-|-- tests/                  # Directory for all tests
-|   |-- unit/               # Unit tests
-|   |   `-- script.spec.js
-|   `-- e2e/                # E2E tests
-|       `-- app.spec.js
-|-- .gitignore
-`-- package.json            # Project dependencies and scripts
-```
+## 4. Data Model
 
-## 4. Component Breakdown
+All data is stored in `localStorage` under two keys: `flux_tasks` and `flux_projects`.
 
-The application UI is composed of several logical components, all managed within `script.js` and rendered into `index.html`.
-
--   **Sidebar (`<nav class="sidebar">`)**:
-    -   Displays the logo and main navigation links (Inbox, Next Actions, etc.).
-    -   Contains the Pomodoro Timer component.
-    -   Dynamically updates task counts using badges.
-
--   **Main Content (`<main class="main-content">`)**:
-    -   **Header**: Displays the title and description of the current view.
-    -   **Quick Add Input**: The primary input field for capturing new tasks.
-    -   **Task List (`<ul id="task-list">`)**:
-        -   Renders the list of tasks based on the current view (`currentView`).
-        -   Each `Task Item` is a sub-component with its own state (done/not done) and actions (move, delete).
-
--   **Pomodoro Timer (`<div class="timer-section">`)**:
-    -   Displays the countdown timer.
-    -   Provides controls to start focus/break sessions and to stop the timer.
-    -   Handles the timer logic, including sending browser notifications.
-
-## 5. Data Model
-
-All application state is stored in the browser's `localStorage` under the key `flux_tasks`. The data is a single array of "task" objects.
-
-### Task Object
-
-A task object represents a single to-do item and has the following structure:
+### Task Object Structure
 
 ```json
 {
-  "id": 1678886400000,       // Unique identifier (timestamp)
-  "text": "My new task",     // The content of the task
-  "status": "inbox",          // Current status: 'inbox', 'next', 'waiting', or 'done'
-  "createdAt": "2023-03-15T12:00:00.000Z" // ISO string of creation date
+  "id": 1672532400000,
+  "text": "Design the application architecture",
+  "status": "inbox",
+  "priority": "medium",
+  "dueDate": "2023-01-15T00:00:00.000Z",
+  "projectId": 1,
+  "subtasks": [
+    { "id": 1, "text": "Define the data model", "done": false },
+    { "id": 2, "text": "Create component diagram", "done": true }
+  ],
+  "createdAt": "2023-01-01T00:00:00.000Z"
 }
 ```
 
-This simple, flat data structure is sufficient for the application's needs and avoids the complexity of relational data. All filtering and manipulation will be done on the client-side.
+- **id:** `number` (timestamp) - Unique identifier for the task.
+- **text:** `string` - The content of the task.
+- **status:** `string` - The current state of the task (`inbox`, `next`, `waiting`, `done`).
+- **priority:** `string` - The priority of the task (`low`, `medium`, `high`).
+- **dueDate:** `string` (ISO 8601) - The date and time the task is due.
+- **projectId:** `number` - The ID of the project the task belongs to.
+- **subtasks:** `array` - A list of subtasks associated with the main task.
+- **createdAt:** `string` (ISO 8601) - The date and time the task was created.
+
+### Project Object Structure
+
+```json
+{
+  "id": 1,
+  "name": "Q1 Sprint",
+  "createdAt": "2023-01-01T00:00:00.000Z"
+}
+```
+
+- **id:** `number` - Unique identifier for the project.
+- **name:** `string` - The name of the project.
+- **createdAt:** `string` (ISO 8601) - The date and time the project was created.
+
+## 5. Development Workflow
+
+The development process will follow a feature-driven approach.
+
+1. **Architecture & PRD:** Define the system architecture and product requirements.
+2. **Feature Implementation:** Each feature will be developed on a separate branch (e.g., `feature/task-organization`).
+3. **Testing:** After a feature is implemented, a corresponding testing phase will be initiated on a new branch (e.g., `test/task-organization`).
+4. **Pull Request & Review:** Once tests are complete and passing, a pull request will be opened for review.
+5. **Merge:** After approval, the feature and its tests will be merged into the `main` branch.
+6. **Iteration:** The process will repeat for the next feature until the application is complete.

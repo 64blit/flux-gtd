@@ -1,67 +1,96 @@
-# Flux GTD: Product Requirements Document (PRD)
+# Flux GTD: Product Requirements Document
 
-## 1. Vision
+## 1. Vision & Target Audience
 
-To create a simple, intuitive, and visually calming Getting Things Done (GTD) web application that helps individuals with ADHD capture, organize, and execute tasks while minimizing distractions and promoting focus.
+- **Product Vision:** To create a simple, intuitive, and visually appealing "Getting Things Done" (GTD) application that helps users with ADHD capture, organize, and execute tasks without feeling overwhelmed.
+- **Target Audience:** Students, professionals, and creatives with ADHD who need a straightforward tool to manage their daily tasks and improve their focus.
 
-## 2. Target Audience & Persona
+## 2. Core Features
 
-Our primary user is someone with ADHD who struggles with executive dysfunction. They find traditional productivity apps to be overly complex, visually cluttered, or distracting.
+### 2.1. Task Management (CRUD)
+- **Description:** Users can add, view, update, and delete tasks.
+- **User Stories:**
+    - As a user, I want to quickly add a task to my inbox so I can capture ideas without breaking my flow.
+    - As a user, I want to edit a task to correct typos or add more detail.
+    - As a user, I want to delete tasks that are no longer relevant.
+    - As a user, I want to mark a task as complete to track my progress.
 
-### Persona: Alex, The Creative Professional
+### 2.2. GTD Task Organization
+- **Description:** Tasks can be organized into four standard GTD categories: Inbox, Next Actions, Waiting, and Done.
+- **User Stories:**
+    - As a user, I want to move a task from the Inbox to "Next Actions" to prioritize what I need to do now.
+    - As a user, I want to move a task to "Waiting" if I'm blocked or have delegated it.
+    - As a user, I want to view all my completed tasks in a "Done" list for a sense of accomplishment.
 
--   **Age**: 28
--   **Occupation**: Graphic Designer
--   **Challenges**:
-    -   Easily overwhelmed by large to-do lists.
-    -   Struggles to start tasks (task initiation).
-    -   Prone to distraction and losing track of time.
-    -   Forgets ideas or tasks if not captured immediately.
-    -   Finds complex interfaces and excessive notifications stressful.
--   **Goals**:
-    -   A frictionless way to get thoughts out of their head.
-    -   A clear, simple view of what to work on *right now*.
-    -   Help with staying focused on a single task for a set period.
-    -   A sense of accomplishment and control over their work.
+### 2.3. Projects
+- **Description:** Users can group tasks into projects.
+- **User Stories:**
+    - As a user, I want to create a new project to organize my tasks.
+    - As a user, I want to assign a task to a project.
+    - As a user, I want to view all tasks in a project.
+    - As a user, I want to rename a project to better reflect its content.
+    - As a user, I want to delete a project to remove it from my list.
 
-## 3. Core Features & Requirements
+### 2.4. Task Priorities
+- **Description:** Users can assign a priority level to each task.
+- **User Stories:**
+    - As a user, I want to set a priority for a task (low, medium, high) to indicate its importance.
+    - As a user, I want to see a visual indicator of a task's priority.
+    - As a user, I want to change the priority of an existing task to reflect changes in its importance.
 
-### 3.1. Simple & Clean Aesthetic
--   **Requirement**: The UI must be minimalist, with a calm color palette, generous whitespace, and clear, readable typography. Avoid animations, badges, or UI elements that are not essential to the core workflow.
--   **User Story**: As Alex, I want a clean and uncluttered interface so I don't feel overwhelmed when I look at my tasks.
+### 2.5. Due Dates
+- **Description:** Users can add a due date to a task.
+- **User Stories:**
+    - As a user, I want to assign a due date to a task to keep track of deadlines.
+    - As a user, I want to be notified when a task is approaching its due date.
+    - As a user, I want to see a visual indication (e.g., red text) for tasks that are overdue.
 
-### 3.2. Task Organization (GTD Method)
--   **Requirement**: The application must support the basic GTD workflow with four distinct views:
-    -   **Inbox**: A place to quickly capture any and all tasks. This is the default view.
-    -   **Next Actions**: A curated list of tasks that are the immediate priority.
-    -   **Waiting**: Tasks that are blocked or delegated to others.
-    -   **Done**: A view of all completed tasks.
--   **User Story**: As Alex, I want to quickly type a thought into an "Inbox" without thinking about it, so I can process it later and not lose the idea.
--   **User Story**: As Alex, I want to move only a few critical tasks to "Next Actions" so I know exactly what to focus on without seeing my entire backlog.
+### 2.6. Subtasks
+- **Description:** Users can break down a task into smaller, more manageable subtasks.
+- **User Stories:**
+    - As a user, I want to add subtasks to a task to break it down into smaller steps.
+    - As a user, I want to mark a subtask as complete.
+    - As a user, I want to see the progress of a task based on its completed subtasks.
 
-### 3.3. Browser Notifications
--   **Requirement**: The application must use the native browser Notification API to provide timely, non-intrusive alerts.
-    -   A notification must be sent when a Pomodoro timer (focus or break) completes.
-    -   Notifications should be optional and require user permission.
-    -   (Future) Consider a subtle notification for tasks that have been in the inbox for too long.
--   **User Story**: As Alex, when I'm deep in focus with the timer on, I want a gentle notification to tell me when it's time for a break, so I don't have to keep checking the clock.
+### 2.7. Search & Filtering
+- **Description:** Users can search for tasks and filter them by various criteria to quickly find what they need.
+- **User Stories:**
+    - As a user, I want to type keywords into a search bar to instantly filter the visible task list by title.
+    - As a user, I want to filter tasks by priority (Low, Medium, High) using a dropdown menu.
+    - As a user, I want to clear my search and filters easily to see all tasks again.
+    - As a user, I want the search and filter controls to be always accessible in the main content header.
 
-### 3.4. Pomodoro Timer
--   **Requirement**: An integrated timer to help users focus in blocks of time.
-    -   The timer should have three states: Focus (default 25 mins), Short Break (default 5 mins), and Long Break (default 15 mins - future).
-    -   The timer display must be clear and always visible.
-    -   When a timer completes, a notification is sent, and a subtle sound should play.
-    -   The page `<title>` should reflect the current timer countdown.
--   **User Story**: As Alex, I want to use a built-in "Focus Timer" to commit to working on one "Next Action" for 25 minutes, helping me overcome the hurdle of starting a task.
+### 2.8. Pomodoro Timer
+- **Description:** A built-in timer to help users focus on a single task for a set period.
+- **User Stories:**
+    - As a user, I want to start a 25-minute "focus" timer to work on a task without interruption.
+    - As a user, I want to start a 5-minute "break" timer to rest between focus sessions.
+    - As a user, I want to be able to stop or reset the timer at any time.
 
-## 4. Acceptance Criteria Summary
+### 2.9. Browser Notifications
+- **Description:** The application will use browser notifications to alert the user when a timer session is complete or a task is due.
+- **User Stories:**
+    - As a user, I want to receive a notification when my Pomodoro timer finishes so I know when to take a break.
+    - As a user, I want to be asked for permission to send notifications when I first use the app.
 
--   A user can add a task to the Inbox.
--   A user can move a task from the Inbox to "Next Actions" or "Waiting".
--   A user can mark a task as "Done" from any view.
--   A user can delete a task.
--   A user can start a 25-minute focus timer.
--   A user can start a 5-minute break timer.
--   A user receives a browser notification when a timer finishes.
--   The UI is clean, simple, and free of visual clutter.
--   All tasks are saved to `localStorage` and persist between sessions.
+### 2.10. Data Persistence
+- **Description:** All tasks are saved in the browser's `localStorage`.
+- **User Stories:**
+    - As a user, I want my tasks to be saved automatically so I don't lose my work if I close the browser.
+    - As a user, I want my tasks to be available immediately when I reopen the application.
+
+## 3. Design & UI/UX
+
+- **Aesthetic:** Clean, modern, and minimalist, with a dark theme to reduce eye strain.
+- **Layout:** A two-column layout with navigation on the left and the main content on the right.
+- **Interactivity:** Smooth animations and transitions to provide a responsive and engaging user experience.
+- **Accessibility:** Adherence to WCAG 2.1 guidelines to ensure the application is usable for people with disabilities. This includes proper color contrast, keyboard navigation, and screen reader support.
+- **Theming:**
+    - As a user, I want to be able to switch between a light and dark theme to suit my preferences.
+
+## 4. Non-Functional Requirements
+
+- **Performance:** The application must be fast and responsive, with UI updates happening in real-time.
+- **Security:** Since all data is stored client-side, there are no server-side security concerns.
+- **Compatibility:** The application must be fully functional on the latest versions of modern web browsers (Chrome, Firefox, Safari, Edge).
+- **Scalability:** While the application is designed to be simple, the codebase should be well-structured to allow for future feature additions.

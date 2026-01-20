@@ -1,0 +1,64 @@
+[
+  {
+    "title": "Implement Projects Feature",
+    "description": "Develop the ability to group tasks into projects. This includes creating, renaming, and deleting projects, as well as assigning tasks to a project.",
+    "branch_name": "feature/projects",
+    "acceptance_criteria": [
+      "Users can create a new project.",
+      "Users can rename an existing project.",
+      "Users can delete a project.",
+      "Users can assign a task to a project.",
+      "Users can view all tasks within a specific project."
+    ]
+  },
+  {
+    "title": "Implement Task Priorities",
+    "description": "Add a priority level to each task (e.g., low, medium, high). This will help users identify which tasks are most important.",
+    "branch_name": "feature/task-priorities",
+    "acceptance_criteria": [
+      "Users can set a priority for a task.",
+      "The task's priority is visually indicated in the UI.",
+      "Users can change the priority of a task."
+    ]
+  },
+  {
+    "title": "Implement Due Dates",
+    "description": "Allow users to add a due date to each task. This will help users keep track of deadlines and manage their time more effectively.",
+    "branch_name": "feature/due-dates",
+    "acceptance_criteria": [
+      "Users can assign a due date to a task.",
+      "The due date is displayed in the task details.",
+      "The application sends a notification when a task is approaching its due date."
+    ]
+  },
+  {
+    "title": "Implement Subtasks",
+    "description": "Enable users to break down a task into smaller, more manageable subtasks. This will help users track the progress of a task and stay organized.",
+    "branch_name": "feature/subtasks",
+    "acceptance_criteria": [
+      "Users can add subtasks to a task.",
+      "Users can mark a subtask as complete.",
+      "The progress of a task is visually represented based on its completed subtasks."
+    ]
+  },
+  {
+    "title": "Implement Search & Filtering",
+    "description": "Add a search bar and filtering options to help users find specific tasks. Users should be able to filter tasks by status, priority, or due date.",
+    "branch_name": "feature/search-filtering",
+    "acceptance_criteria": [
+      "Users can search for a task by its title.",
+      "Users can filter tasks by their status.",
+      "Users can filter tasks by their priority.",
+      "Users can filter tasks by their due date."
+    ]
+  },
+  {
+    "title": "Implement Theming",
+    "description": "Allow users to switch between a light and dark theme. This will improve the user experience and reduce eye strain.",
+    "branch_name": "feature/theming",
+    "acceptance_criteria": [
+      "Users can switch between a light and dark theme.",
+      "The selected theme is saved in `localStorage` and applied on subsequent visits."
+    ]
+  }
+]
