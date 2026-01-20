@@ -21,9 +21,9 @@
     - **Prettier:** For consistent code formatting.
     - **ESLint:** For identifying and fixing code quality issues.
 
-## 3. Application Components
+## 3. Application Structure
 
-The application is divided into logical components, each managed within `script.js`.
+To maintain simplicity, all JavaScript code is contained within a single file, `script.js`. The code is organized into logical sections:
 
 - **State Management (`state.js`):**
     - A single source of truth for application state, including tasks, projects, user settings, and temporary UI state (like `searchQuery` and `filterPriority`).
