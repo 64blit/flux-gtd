@@ -30,7 +30,7 @@ The application is divided into logical components, each managed within `script.
     - Functions for initializing, saving, and loading state from `localStorage`.
 - **UI Rendering (`ui.js`):**
     - Handles all DOM manipulation.
-    - `renderTasks()`: Renders the task list based on the current view, filters, and search queries.
+    - `renderTasks()`: Renders the task list based on the current view, filters, and search queries. Supports rendering nested subtasks.
     - `renderProjects()`: Renders the list of projects in the navigation.
     - `updateCounts()`: Updates the task counts in the navigation sidebar.
     - `updateTimerDisplay()`: Updates the Pomodoro timer display.
@@ -49,6 +49,9 @@ The application is divided into logical components, each managed within `script.
     - `deleteProject()`: Removes a project and handles its tasks (e.g., delete or move to inbox).
     - `moveTask()`: Changes the status of a task.
     - `changePriority()`: Updates the priority of an existing task.
+    - `addSubtask()`: Adds a new subtask to a specific task.
+    - `toggleSubtask()`: Toggles the completion status of a subtask.
+    - `deleteSubtask()`: Removes a subtask from a task.
     - `deleteTask()`: Removes a task from the state.
     - `startTimer()`, `resetTimer()`: Controls the Pomodoro timer.
     - `notify()`: Handles browser notifications.
