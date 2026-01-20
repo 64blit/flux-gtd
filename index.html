@@ -19,12 +19,22 @@
         <nav class="sidebar">
             <h1 class="logo">FLUX</h1>
             <ul class="nav-links">
-                <li class="active" onclick="setView('inbox')">📥 Inbox <span id="count-inbox" class="badge">0</span>
-                </li>
+                <li class="active" onclick="setView('inbox')">📥 Inbox <span id="count-inbox" class="badge">0</span></li>
                 <li onclick="setView('next')">🔥 Next Actions <span id="count-next" class="badge">0</span></li>
                 <li onclick="setView('waiting')">⏳ Waiting <span id="count-waiting" class="badge">0</span></li>
                 <li onclick="setView('done')">✅ Done</li>
             </ul>
+
+            <div class="projects-section">
+                <h2>Projects</h2>
+                <ul id="project-list">
+                    <!-- Projects will be dynamically inserted here -->
+                </ul>
+                <div class="project-input-group">
+                    <input type="text" id="project-input" placeholder="New Project...">
+                    <button id="add-project-btn">+</button>
+                </div>
+            </div>
 
             <div class="timer-section">
                 <h2>Focus Timer</h2>
@@ -46,8 +56,12 @@
 
             <!-- Quick Add -->
             <div class="input-group">
-                <input type="text" id="task-input" placeholder="What's on your mind? (Press Enter)"
-                    onkeypress="handleInput(event)">
+                <input type="text" id="task-input" placeholder="What's on your mind? (Press Enter)" onkeypress="handleInput(event)">
+                <select id="priority-select">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
                 <button onclick="addTask()">Add Task</button>
             </div>
 

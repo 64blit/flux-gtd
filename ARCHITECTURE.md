@@ -13,6 +13,7 @@
     - **HTML5:** For semantic structure.
     - **CSS3:** For styling, using custom properties (variables) for theming.
     - **JavaScript (ES6+):** For all application logic.
+    - **Date Handling:** Native `Date` object and HTML5 `<input type="date">` for all date-related functionality (no external libraries).
 - **Testing:**
     - **Jest:** For unit and integration testing of individual functions and components.
     - **Playwright:** For end-to-end testing to simulate user interactions and verify application flow.
@@ -24,17 +25,45 @@
 
 To maintain simplicity, all JavaScript code is contained within a single file, `script.js`. The code is organized into logical sections:
 
-- **State Management:** A set of global variables (`tasks`, `currentView`, `timerInterval`) holds the application's state. All state is saved to and loaded from `localStorage`.
-- **Core Functions:**
-    - **Task Management:** Functions like `addTask()`, `moveTask()`, and `deleteTask()` handle CRUD operations.
-    - **View Management:** `setView()` controls which task list is displayed.
-    - **Timer:** `startTimer()` and `resetTimer()` manage the Pomodoro timer.
-- **Rendering:** Functions like `renderTasks()` and `updateCounts()` are responsible for all DOM manipulation, ensuring the UI always reflects the current state.
-- **Event Listeners:** A main `DOMContentLoaded` listener initializes the application and sets up event handlers like `handleInput()`.
+- **State Management (`state.js`):**
+    - A single source of truth for application state, including tasks, projects, user settings, and temporary UI state (like `searchQuery` and `filterPriority`).
+    - Functions for initializing, saving, and loading state from `localStorage`.
+- **UI Rendering (`ui.js`):**
+    - Handles all DOM manipulation.
+    - `renderTasks()`: Renders the task list based on the current view, filters, and search queries. Supports rendering nested subtasks.
+    - `renderProjects()`: Renders the list of projects in the navigation.
+    - `updateCounts()`: Updates the task counts in the navigation sidebar.
+    - `updateTimerDisplay()`: Updates the Pomodoro timer display.
+- **Event Handling (`events.js`):**
+    - Contains all event listeners and handlers for user interactions.
+    - `handleTaskInput()`: Manages the "Enter" key press to add a new task.
+    - `handleNavClick()`: Switches between different views (Inbox, Next, etc.).
+    - `handleProjectClick()`: Filters tasks by the selected project.
+    - `handleProjectAction()`: Manages rename/delete actions for projects.
+    - `handleSearchInput()`: Updates `searchQuery` state and triggers re-render.
+    - `handleFilterChange()`: Updates `filterPriority` state and triggers re-render.
+- **Core Logic (`main.js`):**
+    - `addTask()`: Creates a new task object and adds it to the state.
+    - `addProject()`: Creates a new project and adds it to the state.
+    - `renameProject()`: Updates the name of an existing project.
+    - `deleteProject()`: Removes a project and handles its tasks (e.g., delete or move to inbox).
+    - `moveTask()`: Changes the status of a task.
+    - `changePriority()`: Updates the priority of an existing task.
+    - `addSubtask()`: Adds a new subtask to a specific task.
+    - `toggleSubtask()`: Toggles the completion status of a subtask.
+    - `deleteSubtask()`: Removes a subtask from a task.
+    - `deleteTask()`: Removes a task from the state.
+    - `startTimer()`, `resetTimer()`: Controls the Pomodoro timer.
+    - `notify()`: Handles browser notifications.
+    - `checkDueDates()`: Checks for tasks that are due and triggers notifications or visual updates.
+- **Theming (`theme.js`):**
+    - Manages the application's theme, including switching between light and dark modes.
+    - `setTheme()`: Applies the selected theme to the application.
+    - `loadTheme()`: Loads the user's preferred theme from `localStorage`.
 
 ## 4. Data Model
 
-All tasks are stored in a single array in `localStorage` under the key `flux_tasks`.
+All data is stored in `localStorage` under two keys: `flux_tasks` and `flux_projects`.
 
 ### Task Object Structure
 
@@ -43,6 +72,13 @@ All tasks are stored in a single array in `localStorage` under the key `flux_tas
   "id": 1672532400000,
   "text": "Design the application architecture",
   "status": "inbox",
+  "priority": "medium",
+  "dueDate": "2023-01-15T00:00:00.000Z",
+  "projectId": 1,
+  "subtasks": [
+    { "id": 1, "text": "Define the data model", "done": false },
+    { "id": 2, "text": "Create component diagram", "done": true }
+  ],
   "createdAt": "2023-01-01T00:00:00.000Z"
 }
 ```
@@ -50,13 +86,31 @@ All tasks are stored in a single array in `localStorage` under the key `flux_tas
 - **id:** `number` (timestamp) - Unique identifier for the task.
 - **text:** `string` - The content of the task.
 - **status:** `string` - The current state of the task (`inbox`, `next`, `waiting`, `done`).
+- **priority:** `string` - The priority of the task (`low`, `medium`, `high`).
+- **dueDate:** `string` (ISO 8601) - The date and time the task is due.
+- **projectId:** `number` - The ID of the project the task belongs to.
+- **subtasks:** `array` - A list of subtasks associated with the main task.
 - **createdAt:** `string` (ISO 8601) - The date and time the task was created.
+
+### Project Object Structure
+
+```json
+{
+  "id": 1,
+  "name": "Q1 Sprint",
+  "createdAt": "2023-01-01T00:00:00.000Z"
+}
+```
+
+- **id:** `number` - Unique identifier for the project.
+- **name:** `string` - The name of the project.
+- **createdAt:** `string` (ISO 8601) - The date and time the project was created.
 
 ## 5. Development Workflow
 
 The development process will follow a feature-driven approach.
 
-1. **Architecture & PRD:** Define the system architecture and product requirements (completed in this step).
+1. **Architecture & PRD:** Define the system architecture and product requirements.
 2. **Feature Implementation:** Each feature will be developed on a separate branch (e.g., `feature/task-organization`).
 3. **Testing:** After a feature is implemented, a corresponding testing phase will be initiated on a new branch (e.g., `test/task-organization`).
 4. **Pull Request & Review:** Once tests are complete and passing, a pull request will be opened for review.
